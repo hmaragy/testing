@@ -37,7 +37,7 @@
 
         //To display the final no. of days (result)
         document.querySelector(".days").innerText = Difference_In_Days;
-        document.querySelector(".date").innerText = document.querySelector("input").value;
+        document.querySelector(".date").innerText = new Date(document.querySelector("input").value).toLocaleDateString();
       }
 
       document.querySelector("input").addEventListener("change", function (e) {
