@@ -1,48 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <p>Change Date</p>
-    <input type="date" value="2021-08-20" />
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <pre>
-        Hi Andrew,
-        Your membership is going to end on: <span class="date"></span>,
-        
-        Only <span class="days"></span> days are left.
-        
-        Act now!
-
-    </pre>
-    <script type="text/javascript">
-      dateDiff("2021-08-20");
-      function dateDiff(date2) {
-        // JavaScript program to illustrate
-        // calculation of no. of days between two date
-
-        // To set two dates to two variables
-        var date1 = new Date();
-        var date2 = new Date(date2);
-
-        // To calculate the time difference of two dates
-        var Difference_In_Time = date2.getTime() - date1.getTime();
-
-        // To calculate the no. of days between two dates
-        var Difference_In_Days = Math.ceil(Difference_In_Time / (1000 * 3600 * 24));
-
-        //To display the final no. of days (result)
-        document.querySelector(".days").innerText = Difference_In_Days;
-        document.querySelector(".date").innerText = new Date(document.querySelector("input").value).toLocaleDateString();
-      }
-
-      document.querySelector("input").addEventListener("change", function (e) {
-        dateDiff(e.target.value);
+    <script>
+      jQuery(document).ready(function () {
+        jQuery(".ninja_clmn_nm_full_review a").click(function (e) {
+          e.preventDefault();
+          jQuery("html, body").animate({ scrollTop: jQuery(e.target.attributes.href.value).offset().top }, 500);
+        });
       });
     </script>
+  </head>
+  <body>
+    <div class="ninja_clmn_nm_full_review">
+      <a href="#lol">LOLZ</a>
+    </div>
+    <div class="ninja_clmn_nm_full_review">
+      <a href="#lol2">LOLZ</a>
+    </div>
+    <div class="ninja_clmn_nm_full_review">
+      <a href="#lol3">LOLZ</a>
+    </div>
+
+    <div style="height: 750px"></div>
+
+    <div id="lol">HAHA</div>
+    <div style="height: 750px"></div>
+    <div id="lol2">HAHA</div>
+    <div style="height: 750px"></div>
+    <div id="lol3">HAHA</div>
+
+    <script></script>
   </body>
 </html>
