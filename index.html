@@ -4,15 +4,6 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <script>
-      jQuery(document).ready(function () {
-        jQuery(".ninja_clmn_nm_full_review a").click(function (e) {
-          e.preventDefault();
-          jQuery("html, body").animate({ scrollTop: jQuery(e.target.attributes.href.value).offset().top }, 500);
-        });
-      });
-    </script>
   </head>
   <body>
     <div class="ninja_clmn_nm_full_review">
@@ -33,6 +24,12 @@
     <div style="height: 750px"></div>
     <div id="lol3">HAHA</div>
 
-    <script></script>
+    <script>
+      jQuery(document).ready(function () {
+        jQuery(".ninja_clmn_nm_full_review a").click(function (e) {
+          jQuery("html, body").animate({ scrollTop: jQuery(e.target.attributes.href.value).offset().top }, 500);
+        });
+      });
+    </script>
   </body>
 </html>
