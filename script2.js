@@ -1,0 +1,1 @@
+alert("SCRIPT 2");

@@ -4,45 +4,71 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Website</title>
   </head>
   <body>
-    <p>Change Date</p>
-    <input type="date" value="2021-08-20" />
+    HELLO
 
-    <pre>
-        Hi Andrew,
-        Your membership is going to end on: <span class="date"></span>,
-        
-        Only <span class="days"></span> days are left.
-        
-        Act now!
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data-10-year-range.min.js"></script>
+    <script>
+      const SCRIPT1 = "./script1.js"; //or const SCRIPT1 = function() {  //YOUR SCRIPT  }
+      const SCRIPT2 = "./script2.js"; //or const SCRIPT2 = function() { //YOUR SCRIPT}
+      const CLIENT_PREFERNECES_JSON = "./CLIENT_PREFERNECES.json";
 
-    </pre>
-    <script type="text/javascript">
-      dateDiff("2021-08-20");
-      function dateDiff(date2) {
-        // JavaScript program to illustrate
-        // calculation of no. of days between two date
+      const DAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
-        // To set two dates to two variables
-        var date1 = new Date();
-        var date2 = new Date(date2);
-
-        // To calculate the time difference of two dates
-        var Difference_In_Time = date2.getTime() - date1.getTime();
-
-        // To calculate the no. of days between two dates
-        var Difference_In_Days = Math.ceil(Difference_In_Time / (1000 * 3600 * 24));
-
-        //To display the final no. of days (result)
-        document.querySelector(".days").innerText = Difference_In_Days;
-        document.querySelector(".date").innerText = new Date(document.querySelector("input").value).toLocaleDateString();
+      async function getCurrentTime() {
+        try {
+          var currentTime = await fetch("https://www.worldtimeapi.org/api/timezone/EST");
+          return (await currentTime.json()).datetime;
+        } catch (error) {
+          return new Date();
+        }
       }
 
-      document.querySelector("input").addEventListener("change", function (e) {
-        dateDiff(e.target.value);
-      });
+      async function getClientPreferneces() {
+        try {
+          var CLIENT_PREFERNECES = await fetch(CLIENT_PREFERNECES_JSON);
+          return await CLIENT_PREFERNECES.json();
+        } catch (error) {
+          console.log("Client Preferneces not available...");
+          throw error;
+        }
+      }
+
+      async function runScriptsConditionally() {
+        try {
+          let currentEST = await getCurrentTime();
+          const currentHour = moment.utc(currentEST).tz("America/New_York").hours();
+          const currentDay = moment.utc(currentEST).tz("America/New_York").days();
+
+          const CLIENT_PREFERNECES = await getClientPreferneces();
+
+          let clientPreferedTimeToday = CLIENT_PREFERNECES.activeTime[DAYS[currentDay - 1]];
+          if (clientPreferedTimeToday && currentHour < clientPreferedTimeToday.TO) {
+            if (typeof SCRIPT1 === "string") {
+              var script = document.createElement("script");
+              script.src = SCRIPT1;
+              document.getElementsByTagName("head")[0].appendChild(script);
+            } else {
+              SCRIPT1();
+            }
+          } else {
+            if (typeof SCRIPT2 === "string") {
+              var script = document.createElement("script");
+              script.src = SCRIPT2;
+              document.getElementsByTagName("head")[0].appendChild(script);
+            } else {
+              SCRIPT2();
+            }
+          }
+        } catch (error) {
+          throw error;
+        }
+      }
+
+      runScriptsConditionally();
     </script>
   </body>
 </html>

@@ -1,35 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website</title>
   </head>
   <body>
-    <div class="ninja_clmn_nm_full_review">
-      <a href="#lol">LOLZ</a>
-    </div>
-    <div class="ninja_clmn_nm_full_review">
-      <a href="#lol2">LOLZ</a>
-    </div>
-    <div class="ninja_clmn_nm_full_review">
-      <a href="#lol3">LOLZ</a>
-    </div>
+    HELLO
 
-    <div style="height: 750px"></div>
-
-    <div id="lol">HAHA</div>
-    <div style="height: 750px"></div>
-    <div id="lol2">HAHA</div>
-    <div style="height: 750px"></div>
-    <div id="lol3">HAHA</div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.9/runtime.min.js"></script>
     <script>
-      jQuery(document).ready(function () {
-        jQuery(".ninja_clmn_nm_full_review a").click(function (e) {
-          jQuery("html, body").animate({ scrollTop: jQuery(e.target.attributes.href.value).offset().top }, 500);
-        });
-      });
+      var SCRIPT1 = "./script1.js"; //or const SCRIPT1 = function() {  //YOUR SCRIPT  }
+      var SCRIPT2 = "./script2.js"; //or const SCRIPT2 = function() { //YOUR SCRIPT}
+      var CLIENT_PREFERNECES_JSON = "./CLIENT_PREFERNECES.json";
+
+      function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+        if (info.done) {
+          resolve(value);
+        } else {
+          Promise.resolve(value).then(_next, _throw);
+        }
+      }
+
+      function _asyncToGenerator(fn) {
+        return function () {
+          var self = this,
+            args = arguments;
+          return new Promise(function (resolve, reject) {
+            var gen = fn.apply(self, args);
+            function _next(value) {
+              asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+            }
+            function _throw(err) {
+              asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+            }
+            _next(undefined);
+          });
+        };
+      }
+
+      var DAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+      function getCurrentTime() {
+        return _getCurrentTime.apply(this, arguments);
+      }
+
+      function _getCurrentTime() {
+        _getCurrentTime = _asyncToGenerator(
+          /*#__PURE__*/ regeneratorRuntime.mark(function _callee() {
+            var currentTime;
+            return regeneratorRuntime.wrap(
+              function _callee$(_context) {
+                while (1) {
+                  switch ((_context.prev = _context.next)) {
+                    case 0:
+                      _context.prev = 0;
+                      _context.next = 3;
+                      return fetch("https://www.worldtimeapi.org/api/timezone/EST");
+
+                    case 3:
+                      currentTime = _context.sent;
+                      _context.next = 6;
+                      return currentTime.json();
+
+                    case 6:
+                      return _context.abrupt("return", _context.sent.datetime);
+
+                    case 9:
+                      _context.prev = 9;
+                      _context.t0 = _context["catch"](0);
+                      return _context.abrupt("return", new Date());
+
+                    case 12:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              },
+              _callee,
+              null,
+              [[0, 9]]
+            );
+          })
+        );
+        return _getCurrentTime.apply(this, arguments);
+      }
+
+      function getClientPreferneces() {
+        return _getClientPreferneces.apply(this, arguments);
+      }
+
+      function _getClientPreferneces() {
+        _getClientPreferneces = _asyncToGenerator(
+          /*#__PURE__*/ regeneratorRuntime.mark(function _callee2() {
+            var CLIENT_PREFERNECES;
+            return regeneratorRuntime.wrap(
+              function _callee2$(_context2) {
+                while (1) {
+                  switch ((_context2.prev = _context2.next)) {
+                    case 0:
+                      _context2.prev = 0;
+                      _context2.next = 3;
+                      return fetch(CLIENT_PREFERNECES_JSON);
+
+                    case 3:
+                      CLIENT_PREFERNECES = _context2.sent;
+                      _context2.next = 6;
+                      return CLIENT_PREFERNECES.json();
+
+                    case 6:
+                      return _context2.abrupt("return", _context2.sent);
+
+                    case 9:
+                      _context2.prev = 9;
+                      _context2.t0 = _context2["catch"](0);
+                      console.log("Client Preferneces not available...");
+                      throw _context2.t0;
+
+                    case 13:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              },
+              _callee2,
+              null,
+              [[0, 9]]
+            );
+          })
+        );
+        return _getClientPreferneces.apply(this, arguments);
+      }
+
+      function runScriptsConditionally() {
+        return _runScriptsConditionally.apply(this, arguments);
+      }
+
+      function _runScriptsConditionally() {
+        _runScriptsConditionally = _asyncToGenerator(
+          /*#__PURE__*/ regeneratorRuntime.mark(function _callee3() {
+            var currentEST, currentHour, currentDay, CLIENT_PREFERNECES, clientPreferedTimeToday, script;
+            return regeneratorRuntime.wrap(
+              function _callee3$(_context3) {
+                while (1) {
+                  switch ((_context3.prev = _context3.next)) {
+                    case 0:
+                      _context3.prev = 0;
+                      _context3.next = 3;
+                      return getCurrentTime();
+
+                    case 3:
+                      currentEST = _context3.sent;
+                      currentHour = moment.utc(currentEST).tz("America/New_York").hours();
+                      currentDay = moment.utc(currentEST).tz("America/New_York").days();
+                      _context3.next = 8;
+                      return getClientPreferneces();
+
+                    case 8:
+                      CLIENT_PREFERNECES = _context3.sent;
+                      clientPreferedTimeToday = CLIENT_PREFERNECES.activeTime[DAYS[currentDay - 1]];
+
+                      //JSON FILE CONDITIONALS:
+                      if (clientPreferedTimeToday && currentHour < clientPreferedTimeToday.TO) {
+                        if (typeof SCRIPT1 === "string") {
+                          script = document.createElement("script");
+                          script.src = SCRIPT1;
+                          document.getElementsByTagName("head")[0].appendChild(script);
+                        } else {
+                          SCRIPT1();
+                        }
+                      } else {
+                        if (typeof SCRIPT2 === "string") {
+                          script = document.createElement("script");
+                          script.src = SCRIPT2;
+                          document.getElementsByTagName("head")[0].appendChild(script);
+                        } else {
+                          SCRIPT2();
+                        }
+                      }
+
+                      _context3.next = 16;
+                      break;
+
+                    case 13:
+                      _context3.prev = 13;
+                      _context3.t0 = _context3["catch"](0);
+                      throw _context3.t0;
+
+                    case 16:
+                    case "end":
+                      return _context3.stop();
+                  }
+                }
+              },
+              _callee3,
+              null,
+              [[0, 13]]
+            );
+          })
+        );
+        return _runScriptsConditionally.apply(this, arguments);
+      }
+
+      runScriptsConditionally();
     </script>
   </body>
 </html>
