@@ -66,7 +66,9 @@
                     case 0:
                       _context.prev = 0;
                       _context.next = 3;
-                      return fetch("https://www.worldtimeapi.org/api/timezone/EST");
+                      return fetch("https://www.worldtimeapi.org/api/timezone/EST", {
+                        mode: "no-cors",
+                      });
 
                     case 3:
                       currentTime = _context.sent;
