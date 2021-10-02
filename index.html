@@ -4,144 +4,136 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <title>Abod</title>
+
+    <style>
+      * {
+        font-family: "Roboto", sans-serif;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      .title {
+        text-align: center;
+      }
+      .title h1 {
+        text-align: center;
+      }
+      .title p {
+        color: red;
+      }
+
+      .words-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 8rem;
+      }
+
+      .word-block {
+        text-align: center;
+        padding: 2rem;
+        margin: 1rem;
+        width: 20%;
+        border: 2px dashed orange;
+        cursor: pointer;
+        transition: 0.15s all;
+      }
+      .word-block:hover {
+        transform: scale(1.1);
+      }
+
+      .scale-it {
+        transform: scale(1.2) !important;
+      }
+
+      .button-container {
+        margin-top: 2rem;
+        text-align: center;
+      }
+      button {
+        background-color: orange;
+        border: none;
+        padding: 1rem 2rem;
+        color: black;
+        cursor: pointer;
+        box-shadow: 1px 4px 2px rgba(155, 155, 155, 0.2);
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+    </style>
   </head>
   <body>
-    HELLO
+    <div class="container">
+      <div class="title">
+        <h1>Please choose the word you don't want me to say.</h1>
+        <p>* you can only choose one</p>
+      </div>
+
+      <div class="words-container">
+        <div class="word-block">
+          <p>ya zngy</p>
+        </div>
+        <div class="word-block">
+          <p>kosk</p>
+        </div>
+        <div class="word-block">
+          <p>sharo5an</p>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button>Submit</button>
+      </div>
+    </div>
 
     <script>
-      var SCRIPT1 = "./script1.js"; //or const SCRIPT1 = function() {  //YOUR SCRIPT  }
-      var SCRIPT2 = "./script2.js"; //or const SCRIPT2 = function() { //YOUR SCRIPT}
-      var CLIENT_PREFERNECES_JSON = "./CLIENT_PREFERNECES.json";
-
-      var DAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-      var REQUEST_TRY_COUNT = 3;
-
-      function sendRequest(url, callBack) {
-        if ("fetch" in window && "Promise" in window) {
-          fetch(url, {
-            cache: "no-cache",
-          })
-            .then(function (response) {
-              return response.json();
-            })
-            .then(function (result) {
-              callBack(JSON.stringify(result));
-            })
-            .catch(function (error) {
-              callBack(null, error);
-            });
-        } else {
-          var httpRequest = new XMLHttpRequest();
-          try {
-            httpRequest.onreadystatechange = function requestHandler() {
-              if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                if (httpRequest.status === 200) {
-                  callBack(httpRequest.response);
-                } else {
-                  callBack(null);
-                }
-              }
-            };
-          } catch (e) {
-            if (REQUEST_TRY_COUNT-- > 0) {
-              sendRequest(url, callBack);
-            }
-          }
-          httpRequest.open("GET", url, true);
-          httpRequest.setRequestHeader("Access-Control-Allow-Origin", "*");
-          httpRequest.setRequestHeader("Cache-Control", "no-cache");
-          httpRequest.send();
-        }
-      }
-
-      function runScript(s) {
-        if (typeof s === "string") {
-          var script = document.createElement("script");
-          script.src = s;
-          document.getElementsByTagName("head")[0].appendChild(script);
-        } else {
-          s();
-        }
-      }
-
-      function getCurrentTime(callBack) {
-        REQUEST_TRY_COUNT = 3;
-        sendRequest("https://worldtimeapi.org/api/timezone/america/new_york", function (response) {
-          if (response) {
-            var responseObj = JSON.parse(response);
-            callBack({
-              day: DAYS[parseInt(responseObj.day_of_week, 10) - 1],
-              hour: parseInt(responseObj.datetime.split("T")[1].split(":")[0], 10),
-              minute: parseInt(responseObj.datetime.split("T")[1].split(":")[1], 10),
-            });
-          } else {
-            //For Old and Obsolete browsers, or incase of an issue in internet time API:
-            //Old browsers requires you to adjust your PC time from the internet. but time is in GMT.
-            //In that case, we'll just convert from GMT to EST.
-            var date = new Date();
-            var dateDaylightStart = new Date("March 14, 2021");
-            var dateDaylightEnd = new Date("November 7, 2021");
-
-            var offset = date.getTimezoneOffset() / 60;
-
-            if (date >= dateDaylightStart && date < dateDaylightEnd) {
-              //Nothing
-            } else {
-              offset += 1;
-            }
-            var minutes = date.getMinutes();
-            var hours = (date.getHours() + offset - 4) % 24;
-            var dayOffset = 0;
-            if (date.getHours() + offset - 4 < 0) {
-              dayOffset = 1;
-            } else if (date.getHours() + offset - 4 >= 24) {
-              dayOffset = -1;
-            }
-            callBack({
-              day: DAYS[new Date().getDay() - 1 - dayOffset],
-              hour: hours,
-              minute: minutes,
-            });
-          }
+      let selectedWord = "";
+      document.querySelectorAll(".word-block").forEach(block => {
+        block.addEventListener("click", e => {
+          document.querySelectorAll(".word-block").forEach(b => {
+            b.classList.remove("scale-it");
+            selectedWord = "";
+          });
+          e.currentTarget.classList.add("scale-it");
+          selectedWord = e.currentTarget.innerText;
         });
-      }
-      function getClientPreferneces(currentTime) {
-        var hour = currentTime.hour;
-        var minute = currentTime.minute;
-        var time = new Date("01/01/2021 " + hour + ":" + minute);
-        var currentDay = currentTime.day;
-        REQUEST_TRY_COUNT = 3;
-        sendRequest(CLIENT_PREFERNECES_JSON, function (response) {
-          if (response) {
-            var responseObj = JSON.parse(response);
-            var prefTime = responseObj.activeTime[currentDay] || [];
-            var timeInBetween = false;
-            for (var i = 0; i < prefTime.length; i++) {
-              var t = prefTime[i];
-              var from = new Date("01/01/2021 " + t.FROM);
-              var to = new Date("01/01/2021 " + t.TO);
-              if ((time >= from && time < to) || (from > to && time > from) || (from > to && time < to)) {
-                timeInBetween = true;
-                break;
-              }
-            }
-            if (timeInBetween) {
-              runScript(SCRIPT1);
-            } else {
-              runScript(SCRIPT2);
-            }
+      });
+
+      document.querySelector("button").addEventListener("click", function () {
+        if (selectedWord) {
+          let data = confirm("Print receipt");
+          if (!data) {
+            alert("please reload the page and try again.");
           } else {
-            runScript(SCRIPT2);
+            alert(
+              "Thank you, after you click ok. the receipt will be printed. send it to hazem and he'll know what to do."
+            );
+            let oldData = document.body.innerHTML;
+            document.body.innerHTML = `
+              <pre>
+                I confirm that I choose the word ${selectedWord} as the word I don't want you to say again.
+                Please pay me 2200LE for all the damage you have caused me for saying this word.
+
+                Thank you,
+                Abdullah ayman.
+              </pre>
+            
+            `;
+            window.print();
+
+            location.reload();
           }
-        });
-      }
-
-      function runScriptsConditionally() {
-        getCurrentTime(getClientPreferneces);
-      }
-
-      runScriptsConditionally(getClientPreferneces);
+        } else {
+          alert("e5tar 7aga ya zngy.");
+        }
+      });
     </script>
   </body>
 </html>
