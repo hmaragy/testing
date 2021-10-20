@@ -1,4 +1,65 @@
-<center>
-  <img src="https://i.stack.imgur.com/1dpmw.gif" width="531" height="387" alt="" />
-  <h1>Just Buy Bitcoin.</h1>
-</center>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      html,
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .image-container {
+        width: 400px;
+      }
+      #image {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div>Count: <span id="count"></span></div>
+    <div class="image-container">
+      <img id="image" src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="" />
+    </div>
+    <div class="controls">
+      <button id="left">Left Button</button>
+      <button id="right">Right Button</button>
+    </div>
+
+    <script>
+      var srcList = ["https://www.remove.bg/images/remove_image_background.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png", "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"];
+
+      var counter = 0;
+      document.querySelector("#count").innerText = counter;
+
+      document.querySelector("#left").addEventListener("click", function () {
+        counter--;
+        checkCounter();
+      });
+
+      document.querySelector("#right").addEventListener("click", function () {
+        counter++;
+        checkCounter();
+      });
+
+      function checkCounter() {
+        document.querySelector("#count").innerText = counter;
+        if (counter % 30 == 0) {
+          document.querySelector("#image").src = srcList[2];
+        } else if (counter % 20 == 0) {
+          document.querySelector("#image").src = srcList[1];
+        } else if (counter % 10 == 0) {
+          document.querySelector("#image").src = srcList[0];
+        }
+      }
+    </script>
+  </body>
+</html>
